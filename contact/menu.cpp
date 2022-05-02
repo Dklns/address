@@ -16,6 +16,7 @@ void menu::run()
 	std::cout << "请选择您需要的功能：";
 	// 初始化字典
 	int ret = 0;
+	// 找到保存有所有汉字和拼音的键值对的文件
 	string path = "pinyin.txt";
 	map<string, string> pin_yin_map;
 	ret = PinyinMapParser::GetPinYinMap(path, pin_yin_map);
@@ -84,6 +85,18 @@ void menu::memory(group* Group)
 
 void menu::addContact(group* Group, std::map<std::string, std::string>& map, std::string name,std::string phone)
 {
+	group* t;
+	for (int j = 0; j < this->groups.size(); j++)
+	{
+		t = this->groups[j];
+		for (int i = 0; i < t->m_group.size(); i++)
+		{
+			if (name == t->m_group[i]->m_name) {
+				std::cout << "联系人已存在，于 " << t->name() << " 分组中" << endl;
+				return;
+			}
+		}
+	}
 	contact* p = new contact(name, phone);
 	Group->addContact(p, map);
 	memory(Group);
