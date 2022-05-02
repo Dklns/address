@@ -12,11 +12,8 @@ void menu::run()
 	std::string groupName, name, phone;
 
 	// 提示
-	std::cout << "1：添加联系人到默认分组   2：添加联系人到指定分组" << std::endl;
-	std::cout << "3：查看所有联系人         4:查看指定分组所有联系人" << std::endl;
-	std::cout << "5：查看所有分组           6.删除联系人" << std::endl;
-	std::cout << "7：修改联系人电话         8.修改联系人分组" << std::endl;
-	std::cout << "9：查看联系人             10.输入999结束操作" << std::endl;
+	mainReminder();
+	std::cout << "请选择您需要的功能：";
 	// 初始化字典
 	int ret = 0;
 	string path = "pinyin.txt";
@@ -29,64 +26,45 @@ void menu::run()
 
 	// 选择功能
 	std::cin >> op;
-	while (op != 999)
+	while (op != 11)
 	{
 		switch (op)
 		{
 		case 1:
-			std::cout << "请输入联系人名称：";
-			std::cin >> name;
-			std::cout << "请输入联系人电话：";
-			std::cin >> phone;
-			this->addContact(this->groups.front(), pin_yin_map, name, phone);
+			menu1(pin_yin_map);
 			break;
 		case 2:
-			std::cout << "请输入分组名：";
-			std::cin >> groupName;
-			std::cout << "请输入联系人名称：";
-			std::cin >> name;
-			std::cout << "请输入联系人电话：";
-			std::cin >> phone;
-			assignAdd(groupName, pin_yin_map, name, phone);
+			menu2(pin_yin_map);
 			break;
 		case 3:
+			std::cout << "\n";
 			this->showAll();
 			break;
 		case 4:
-			std::cout << "请输入分组名：";
-			std::cin >> groupName;
-			this->showGroup(groupName);
+			menu4();
 			break;
 		case 5:
+			std::cout << "\n";
 			this->showGroups();
+			break;
 		case 6:
-			std::cout << "请输入要删除的联系人的名称：";
-			std::cin >> name;
-			this->deleteContact(name);
+			menu6();
 			break;
 		case 7:
-			std::cout << "请输入需要修改的联系人名称：";
-			std::cin >> name;
-			std::cout << "请输入修改后的电话：";
-			std::cin >> phone;
-			this->modifyPhone(name, phone);
+			menu7();
 			break;
 		case 8:
-			std::cout << "请输入需要修改的联系人名称：";
-			std::cin >> name;
-			std::cout << "请输入修改后的分组：";
-			std::cin >> groupName;
-			this->modifyGroup(name, groupName, pin_yin_map);
+			menu8(pin_yin_map);
 			break;
 		case 9:
-			std::cout << "请输入联系人名称：";
-			std::cin >> name;
-			this->showOne(name);
+			menu9();
 			break;
+		case 10:
+			menu10();
 		default:
 			break;
 		}
-		std::cout << "\n请继续输入操作：";
+		std::cout << "\n请继续选择功能：";
 		std::cin >> op;
 	}
 }
@@ -238,6 +216,135 @@ void menu::modifyGroup(std::string name, std::string groupName, std::map<std::st
 	int i = this->findGroup(groupName);
 	this->addContact(this->groups[i], Map, name,phone);
 	memory(this->groups[i]);
+}
+
+void menu::mainReminder()
+{
+	std::cout << "**************************功能主界面*************************" << endl;
+	std::cout << "1：添加联系人到默认分组   2：添加联系人到指定分组" << std::endl;
+	std::cout << "3：查看所有联系人         4:查看指定分组所有联系人" << std::endl;
+	std::cout << "5：查看所有分组           6.删除联系人" << std::endl;
+	std::cout << "7：修改联系人电话         8.修改联系人分组" << std::endl;
+	std::cout << "9：查看联系人             10.清屏" << std::endl;
+	std::cout << "11:退出程序" << std::endl;
+}
+
+void menu::funcReminder(std::string name)
+{
+	std::cout << "\n**************" << name << "******************\n\n";
+	std::cout << "（输入0则退出该功能）\n";
+}
+
+void menu::menu1(std::map<std::string, std::string>& map)
+{
+	funcReminder("添加联系人到默认分组");
+	std::string name, phone;
+	while (1)
+	{
+		std::cout << "请输入联系人名称：";
+		std::cin >> name;
+		if (name == "0") break;
+		std::cout << "请输入联系人电话：";
+		std::cin >> phone;
+		if (phone == "0") break;
+		this->addContact(this->groups.front(), map, name, phone);
+	}
+}
+
+void menu::menu2(std::map<std::string, std::string>& map)
+{
+	funcReminder("添加联系人到指定分组");
+	std::string name, phone,groupName;
+	while (1)
+	{
+		std::cout << "请输入分组名：";
+		std::cin >> groupName;
+		if (groupName == "0") break;
+		std::cout << "请输入联系人名称：";
+		std::cin >> name;
+		if (name == "0") break;
+		std::cout << "请输入联系人电话：";
+		std::cin >> phone;
+		if (phone == "0") break;
+		assignAdd(groupName, map, name, phone);
+	}
+}
+
+void menu::menu4()
+{
+	funcReminder("查看指定分组的所有联系人");
+	std::string groupName;
+	while (1)
+	{
+		std::cout << "请输入分组名：";
+		std::cin >> groupName;
+		if (groupName == "0") break;
+		this->showGroup(groupName);
+	}
+}
+
+void menu::menu6()
+{
+	funcReminder("删除联系人");
+	std::string name;
+	while (1)
+	{
+		std::cout << "请输入要删除的联系人的名称：";
+		std::cin >> name;
+		if (name == "0") break;
+		this->deleteContact(name);
+	}
+}
+
+void menu::menu7()
+{
+	funcReminder("修改联系人电话");
+	std::string name, phone;
+	while (1)
+	{
+		std::cout << "请输入需要修改的联系人名称：";
+		std::cin >> name;
+		if (name == "0") break;
+		std::cout << "请输入修改后的电话：";
+		std::cin >> phone;
+		if (phone == "0") break;
+		this->modifyPhone(name, phone);
+	}
+}
+
+void menu::menu8(std::map<std::string, std::string>& map)
+{
+	funcReminder("修改联系人的分组");
+	std::string name, groupName;
+	while (1)
+	{
+		std::cout << "请输入需要修改的联系人名称：";
+		std::cin >> name;
+		if (name == "0") break;
+		std::cout << "请输入修改后的分组：";
+		std::cin >> groupName;
+		if (groupName == "0") break;
+		this->modifyGroup(name, groupName, map);
+	}
+}
+
+void menu::menu9()
+{
+	funcReminder("查找联系人");
+	std::string name;
+	while (1)
+	{
+		std::cout << "请输入联系人名称：";
+		std::cin >> name;
+		if (name == "0") break;
+		this->showOne(name);
+	}
+}
+
+void menu::menu10()
+{
+	std::system("cls");
+	mainReminder();
 }
 
 void menu::showGroup(std::string groupName)

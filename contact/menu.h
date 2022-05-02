@@ -37,6 +37,18 @@ public:
 	void modifyPhone(std::string name, std::string phone);
 	void modifyGroup(std::string name, std::string groupName,std::map<std::string,std::string> Map);
 
+	// 简化功能所写的函数
+	void mainReminder();
+	void funcReminder(std::string name);
+	void menu1(std::map<std::string, std::string>& map);
+	void menu2(std::map<std::string, std::string>& map);
+	void menu4();
+	void menu6();
+	void menu7();
+	void menu8(std::map<std::string, std::string>& map);
+	void menu9();
+	void menu10();
+
 	vector<group*> groups;
 };
 
