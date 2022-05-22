@@ -8,6 +8,7 @@ class contact
 public:
 	//与初识化相关
 	contact(std::string name, std::string phone = " ");
+	contact(std::string name, std::string phone, std::string pinyin);
 	void setphone(std::string phone);
 	std::string getPhone();
 

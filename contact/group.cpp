@@ -12,8 +12,8 @@ void group::addContact(contact* contact, std::map<std::string, std::string>& map
 	// 判断联系人名字是中文还是英文
 	if (ch <= 'z' && ch >= 'a' || ch <= 'Z' && ch >= 'A') contact->m_pinyin = contact->m_name;
 	else {
-		std::string pinyin;
-		std::string word;
+		std::string pinyin = "";
+		std::string word = "";
 		// 获取名字的总拼音，因为字典里只记录了每个字的拼音，所以需要查名字中每个字的拼音
 		for (int i = 0; i < contact->m_name.size(); i += 2)
 		{

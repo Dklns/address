@@ -45,7 +45,7 @@ int main()
 		{
 			while (f.read((char*)q, sizeof(contact)))
 			{
-				contact* t = new contact(q->m_name, q->getPhone());
+				contact* t = new contact(q->m_name, q->getPhone(),q->m_pinyin);
 				Menu.groups[i]->m_group.push_back(t);
 			}
 			num += sizeof(contact);
