@@ -22,6 +22,7 @@ public:
 
 	// É¾³ý
 	void deleteContact(std::string name);
+	void deleteGroup(std::string name);
 
 	// ²éÕÒ
 	void showContact(group* Group);
@@ -48,6 +49,7 @@ public:
 	void menu8(std::map<std::string, std::string>& map);
 	void menu9();
 	void menu10();
+	void menu11();
 
 	vector<group*> groups;
 };

@@ -3,7 +3,7 @@
 #include<vector>
 #include<map>
 #include<string>
-#include"convert.h"
+//#include"convert.h"
 #include"pinYinMapParser.h"
 
 class group

@@ -27,7 +27,7 @@ void menu::run()
 
 	// 选择功能
 	std::cin >> op;
-	while (op != 11)
+	while (op != 12)
 	{
 		switch (op)
 		{
@@ -62,6 +62,8 @@ void menu::run()
 			break;
 		case 10:
 			menu10();
+		case 11:
+			menu11();
 		default:
 			break;
 		}
@@ -107,6 +109,26 @@ void menu::deleteContact(std::string name)
 	group* p = this->partOfGroup(name);
 	p->deleteContact(name);
 	memory(p);
+}
+
+void menu::deleteGroup(std::string name)
+{
+	for (auto iter = groups.begin(); iter != groups.end(); iter++)
+	{
+		if ((*iter)->name() == name)
+		{
+			while ((*iter)->m_group.size())
+			{
+				auto i = (*iter)->m_group.begin();
+				delete (*i);
+				(*iter)->m_group.erase(i);
+			}
+			delete(*iter);
+			groups.erase(iter);
+			return;
+		}
+	}
+	std::cout << "该分组不存在" << std::endl;
 }
 
 group* menu::creatGroup(std::string name)
@@ -239,7 +261,7 @@ void menu::mainReminder()
 	std::cout << "5：查看所有分组           6.删除联系人" << std::endl;
 	std::cout << "7：修改联系人电话         8.修改联系人分组" << std::endl;
 	std::cout << "9：查看联系人             10.清屏" << std::endl;
-	std::cout << "11:退出程序" << std::endl;
+	std::cout << "11:删除分组               12:退出程序" << std::endl;
 }
 
 void menu::funcReminder(std::string name)
@@ -358,6 +380,20 @@ void menu::menu10()
 {
 	std::system("cls");
 	mainReminder();
+}
+
+void menu::menu11()
+{
+	funcReminder("删除分组");
+	std::string name;
+	while (1)
+	{
+		std::cout << "请输入分组名：";
+		std::cin >> name;
+		if (name == "0") break;
+		this->deleteGroup(name);
+	}
+	
 }
 
 void menu::showGroup(std::string groupName)
